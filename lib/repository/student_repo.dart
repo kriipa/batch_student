@@ -1,3 +1,4 @@
+import 'package:batch_student_objbox_api/app/network_connectivity.dart';
 import 'package:batch_student_objbox_api/data_source/local_data_source/student_data_source.dart';
 import 'package:batch_student_objbox_api/model/student.dart';
 
@@ -19,7 +20,12 @@ class StudentRepositoryImpl extends StudentRepository {
   }
 
   @override
-  Future<Student?> loginStudent(String username, String password) {
-    return StudentDataSource().loginStudent(username, password);
+  Future<Student?> loginStudent(String username, String password) async {
+    bool? status = await NetworkConnectivity.isOnline();
+    if (status!) {
+      return StudentDataSource().loginStudent(username, password);
+    } else {
+      return StudentDataSource().loginStudent(username, password);
+    }
   }
 }

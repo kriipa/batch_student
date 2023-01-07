@@ -1,11 +1,9 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:batch_student_objbox_api/repository/student_repo.dart';
 import 'package:batch_student_objbox_api/screen/register.dart';
 import 'package:motion_toast/motion_toast.dart';
 
-import '../app/network_connectivity.dart';
 import 'dashboard.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,78 +16,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final Map _source = {ConnectivityResult.none: false};
-  final NetworkConnectivity _networkConnectivity = NetworkConnectivity.instance;
-  String string = '';
-
-  checkConnection() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "Mobile",
-            style: TextStyle(fontSize: 30),
-          ),
-        ),
-      );
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "Wifi",
-            style: TextStyle(fontSize: 30),
-          ),
-        ),
-      );
-    } else if (connectivityResult == ConnectivityResult.none) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-            "No Internet",
-            style: TextStyle(fontSize: 30),
-          ),
-        ),
-      );
-    }
-  }
-
-  @override
-  void initState() {
-    checkConnection();
-    super.initState();
-    // _networkConnectivity.initialise();
-    // _networkConnectivity.myStream.listen((source) {
-    //   _source = source;
-    //   // print('source $_source');
-    //   // 1.
-    //   switch (_source.keys.toList()[0]) {
-    //     case ConnectivityResult.mobile:
-    //       string =
-    //           _source.values.toList()[0] ? 'Mobile: Online' : 'Mobile: Offline';
-    //       break;
-    //     case ConnectivityResult.wifi:
-    //       string =
-    //           _source.values.toList()[0] ? 'WiFi: Online' : 'WiFi: Offline';
-    //       break;
-    //     case ConnectivityResult.none:
-    //     default:
-    //       string = 'Offline';
-    //   }
-    //   // 2.
-    //   setState(() {});
-    //   // 3.
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     SnackBar(
-    //       content: Text(
-    //         string,
-    //         style: const TextStyle(fontSize: 30),
-    //       ),
-    //     ),
-    //   );
-    // });
-  }
-
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController(text: 'kiran');
   final _passwordController = TextEditingController(text: 'kiran123');
