@@ -1,3 +1,6 @@
+import 'package:batch_student_objbox_api/app/network_connectivity.dart';
+import 'package:batch_student_objbox_api/data_source/remote_data_source/batch_data_source.dart';
+
 import '../data_source/local_data_source/batch_data_source.dart';
 import '../model/batch.dart';
 import '../model/student.dart';
@@ -15,8 +18,13 @@ class BatchRepositoryImpl extends BatchRepository {
   }
 
   @override
-  Future<List<Batch>> getAllBatch() {
-    return BatchDataSource().getAllBatch();
+  Future<List<Batch>> getAllBatch() async {
+    bool status = await NetworkConnectivity.isOnline();
+    if (status) {
+      return BatchRemoteDataSource().getAllBatch();
+    } else {
+      return BatchDataSource().getAllBatch();
+    }
   }
 
   @override

@@ -39,6 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   _saveStudent() async {
     Student student = Student(
+      'id',
       _fnameController.text,
       _lnameController.text,
       _usernameController.text,
@@ -139,7 +140,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               .map(
                                 (batch) => DropdownMenuItem(
                                   value: batch,
-                                  child: Text(batch.batchName),
+                                  child: Text(batch.batchName!),
                                 ),
                               )
                               .toList(),

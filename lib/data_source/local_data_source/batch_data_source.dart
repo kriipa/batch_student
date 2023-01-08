@@ -22,7 +22,7 @@ class BatchDataSource {
     try {
       return Future.value(objectBoxInstance.getAllBatch());
     } catch (e) {
-      throw Exception('Error in getting all batch');
+      throw Exception('Error in getting all batch ${e.toString()}');
     }
   }
 

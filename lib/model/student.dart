@@ -7,6 +7,10 @@ class Student {
   // @Id(assignable: true)
   @Id(assignable: true)
   int stdId;
+
+  @Unique()
+  @Index()
+  String studentId;
   String fname;
   String lname;
   String username;
@@ -15,7 +19,7 @@ class Student {
   final batch = ToOne<Batch>();
   final course = ToMany<Course>();
 
-  Student(this.fname, this.lname, this.username, this.password,
+  Student(this.studentId, this.fname, this.lname, this.username, this.password,
       {this.stdId = 0});
   // Student(
   //   this.stdId,

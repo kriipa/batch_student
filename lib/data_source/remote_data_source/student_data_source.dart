@@ -1,29 +1,29 @@
 import 'package:batch_student_objbox_api/app/constants.dart';
+import 'package:batch_student_objbox_api/data_source/remote_data_source/response/login_response.dart';
 import 'package:batch_student_objbox_api/helper/http_service.dart';
-import 'package:batch_student_objbox_api/model/student.dart';
 import 'package:dio/dio.dart';
 
 class StudentRemoteDataSource {
-  // Future<int> addStudent(Student student) async {
+  final Dio _httpServices = HttpServices().getDioInstance();
 
-  // }
-
-  // Future<List<Student>> getStudents() {
-
-  // }
-
-  Future<Student?> loginStudent(String username, String password) async {
+  Future<bool> loginStudent(String username, String password) async {
     try {
-      Response response = await HttpServices().getDioInstance().post(
+      Response response = await _httpServices.post(
         Constant.studentLoginURL,
         data: {
           'username': username,
           'password': password,
         },
       );
+      if (response.statusCode == 200) {
+        LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+        Constant.token = loginResponse.token!;
+        return Future.value(true);
+      } else {
+        return Future.value(false);
+      }
     } catch (e) {
-      return Future.value(null);
+      return Future.value(false);
     }
-    return null;
   }
 }

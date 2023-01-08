@@ -21,9 +21,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController(text: 'kiran123');
 
   _login() async {
-    final student = await StudentRepositoryImpl()
+    final islogin = await StudentRepositoryImpl()
         .loginStudent(_usernameController.text, _passwordController.text);
-    if (student != null) {
+    if (islogin) {
       _goToAnotherPage();
     } else {
       _showMessage();

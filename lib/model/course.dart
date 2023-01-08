@@ -5,13 +5,17 @@ import 'package:objectbox/objectbox.dart';
 class Course {
   // @Id(assignable: true)
   @Id(assignable: true)
-  int courseId;
+  int id;
+
+  @Unique()
+  @Index()
+  String courseId;
   String courseName;
 
   @Backlink()
   final student = ToMany<Student>();
 
-  Course(this.courseName, {this.courseId = 0});
+  Course(this.courseId, this.courseName, {this.id = 0});
 
   // Course(this.courseId, this.courseName);
 }

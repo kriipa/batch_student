@@ -150,7 +150,7 @@ class DisplayBatches extends StatelessWidget {
                         color: HexColor.fromHex("#ED9728"),
                         child: Center(
                           child: Text(
-                            batch.batchName,
+                            batch.batchName!,
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,

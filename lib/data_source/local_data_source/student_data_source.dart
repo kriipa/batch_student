@@ -24,11 +24,15 @@ class StudentDataSource {
     }
   }
 
-  Future<Student?> loginStudent(String username, String password) {
+  Future<bool> loginStudent(String username, String password) async {
     try {
-      return Future.value(objectBoxInstance.loginStudent(username, password));
+      if (objectBoxInstance.loginStudent(username, password) != null) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
-      return Future.value(null);
+      throw Exception('Error occured : ${e.toString()}');
     }
   }
 }
