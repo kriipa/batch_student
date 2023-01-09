@@ -33,7 +33,7 @@ class _CourseStudentScreenState extends State<CourseStudentScreen> {
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(lstStudents[index].fname),
+                  title: Text(lstStudents[index].fname!),
                   subtitle: Text(
                       lstStudents[index].batch.target!.batchName.toString()),
                   trailing: Wrap(

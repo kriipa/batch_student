@@ -36,7 +36,7 @@ class _BatchStudentScreenState extends State<BatchStudentScreen> {
               itemCount: _lstStudents.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(_lstStudents[index].fname),
+                  title: Text(_lstStudents[index].fname!),
                   subtitle: Text(
                       _lstStudents[index].batch.target!.batchName.toString()),
                   trailing: Wrap(

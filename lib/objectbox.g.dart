@@ -251,11 +251,19 @@ ModelDefinition getObjectBoxModel() {
           object.stdId = id;
         },
         objectToFB: (Student object, fb.Builder fbb) {
-          final studentIdOffset = fbb.writeString(object.studentId);
-          final fnameOffset = fbb.writeString(object.fname);
-          final lnameOffset = fbb.writeString(object.lname);
-          final usernameOffset = fbb.writeString(object.username);
-          final passwordOffset = fbb.writeString(object.password);
+          final studentIdOffset = object.studentId == null
+              ? null
+              : fbb.writeString(object.studentId!);
+          final fnameOffset =
+              object.fname == null ? null : fbb.writeString(object.fname!);
+          final lnameOffset =
+              object.lname == null ? null : fbb.writeString(object.lname!);
+          final usernameOffset = object.username == null
+              ? null
+              : fbb.writeString(object.username!);
+          final passwordOffset = object.password == null
+              ? null
+              : fbb.writeString(object.password!);
           fbb.startTable(8);
           fbb.addInt64(0, object.stdId);
           fbb.addOffset(1, studentIdOffset);
@@ -272,18 +280,17 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = Student(
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 12, ''),
-              const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 14, ''),
-              stdId:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
+              stdId: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
+              studentId: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 6),
+              fname: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 8),
+              lname: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 10),
+              username: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12),
+              password: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 14));
           object.batch.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0);
           object.batch.attach(store);

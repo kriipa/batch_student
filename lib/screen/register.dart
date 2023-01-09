@@ -1,9 +1,13 @@
+import 'dart:io';
+
+import 'package:batch_student_objbox_api/repository/batch_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:batch_student_objbox_api/model/course.dart';
 import 'package:batch_student_objbox_api/model/student.dart';
-import 'package:batch_student_objbox_api/repository/batch_repo.dart';
 import 'package:batch_student_objbox_api/repository/course_repository.dart';
 import 'package:batch_student_objbox_api/repository/student_repo.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
@@ -20,7 +24,6 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   Batch? _dropDownValue;
-
   List<Course> _lstCourseSelected = [];
 
   final _gap = const SizedBox(height: 8);
@@ -30,20 +33,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _lnameController = TextEditingController(text: 'Rana');
   final _usernameController = TextEditingController(text: 'kiran');
   final _passwordController = TextEditingController(text: 'kiran123');
-  // // Get the batch object from the list of batches
-  // final batch = _lstBatches
-  //     .firstWhere((element) => element.batchName == _dropDownValue);
-
-  // student.batch.targetId = batch.batchId;
-  // Insert all the course instance in Student Box
 
   _saveStudent() async {
     Student student = Student(
-      'id',
-      _fnameController.text,
-      _lnameController.text,
-      _usernameController.text,
-      _passwordController.text,
+      fname: _fnameController.text,
+      lname: _lnameController.text,
+      username: _usernameController.text,
+      password: _passwordController.text,
     );
 
     //student.batch.targetId = _dropDownValue!.batchId;
@@ -60,15 +56,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _showMessage(status);
   }
 
-  // _showStudentCourse() async {
-  //   List<Student> lstStudent = await StudentRepositoryImpl().getStudents();
-  //   for (Student s in lstStudent) {
-  //     debugPrint(s.fname);
-  //     for (Course c in s.course) {
-  //       debugPrint(c.courseName);
-  //     }
-  //   }
-  // }
+  File? _img;
+
+  Future _browseImage(ImageSource imageSource) async {
+    try {
+      // Source is either Gallary or Camera
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image != null) {
+        setState(() {
+          _img = File(image.path);
+        });
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 
   _showMessage(int status) {
     if (status > 0) {
@@ -95,6 +99,53 @@ class _RegisterScreenState extends State<RegisterScreen> {
               key: _key,
               child: Column(
                 children: [
+                  InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                        backgroundColor: Colors.grey[300],
+                        context: context,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                        ),
+                        builder: (context) => Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    _browseImage(ImageSource.camera);
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(Icons.camera),
+                                  label: const Text('Camera'),
+                                ),
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    _browseImage(ImageSource.gallery);
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(Icons.image),
+                                  label: const Text('Gallery'),
+                                )
+                              ]),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      height: 200,
+                      width: double.infinity - 500,
+                      child: _img == null
+                          ? SvgPicture.asset(
+                              'assets/svg/profile.svg',
+                            )
+                          : Image.file(_img!),
+                    ),
+                  ),
+                  _gap,
                   TextFormField(
                     controller: _fnameController,
                     decoration: const InputDecoration(

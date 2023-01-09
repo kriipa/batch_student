@@ -7,7 +7,7 @@ class HttpServices {
   factory HttpServices() => _instance;
   HttpServices._internal();
 
-  static Dio? _dio;
+  Dio? _dio;
 
   final int _timeout = 60 * 1000; //1 min
 
@@ -19,22 +19,16 @@ class HttpServices {
   };
 
   Dio getDioInstance() {
-    if (_dio == null) {
-      _dio = Dio(
-        BaseOptions(
-          baseUrl: Constant.baseURL,
-          connectTimeout: _timeout,
-          receiveTimeout: _timeout,
-          headers: headers,
-        ),
-      );
-      _dio!.interceptors.add(PrettyDioLogger(
-          requestHeader: true, requestBody: true, responseHeader: true));
-      return _dio!;
-    } else {
-      _dio!.interceptors.add(PrettyDioLogger(
-          requestHeader: true, requestBody: true, responseHeader: true));
-      return _dio!;
-    }
+    _dio ??= Dio(
+      BaseOptions(
+        baseUrl: Constant.baseURL,
+        connectTimeout: _timeout,
+        receiveTimeout: _timeout,
+        headers: headers,
+      ),
+    );
+    _dio!.interceptors.add(PrettyDioLogger(
+        requestHeader: true, requestBody: true, responseHeader: true));
+    return _dio!;
   }
 }
