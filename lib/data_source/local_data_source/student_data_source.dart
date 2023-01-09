@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:batch_student_objbox_api/model/student.dart';
 
 import '../../helper/objectbox.dart';
@@ -8,7 +10,7 @@ class StudentDataSource {
   //OR
   ObjectBoxInstance objectBoxInstance2 = ObjectBoxState.objectBoxInstance!;
 
-  Future<int> addStudent(Student student) async {
+  Future<int> addStudent(File? file, Student student) async {
     try {
       return objectBoxInstance.addStudent(student);
     } catch (e) {

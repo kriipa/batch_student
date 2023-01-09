@@ -44,15 +44,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     //student.batch.targetId = _dropDownValue!.batchId;
     student.batch.target = _dropDownValue;
-
-    // Add course
-    // for (Course c in _lstCourseSelected) {
-    //   student.course.add(c);
-    // }
-    // OR
+    // Add all the courses
     student.course.addAll(_lstCourseSelected);
 
-    int status = await StudentRepositoryImpl().addStudent(student);
+    int status = await StudentRepositoryImpl().addStudent(_img, student);
     _showMessage(status);
   }
 
