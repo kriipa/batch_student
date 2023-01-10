@@ -44,7 +44,6 @@ class StudentRemoteDataSource {
         );
       }
 
-      List<String> a = student.course.map((course) => course.courseId).toList();
       FormData formData = FormData.fromMap({
         'fname': student.fname,
         'lname': student.lname,
@@ -58,7 +57,7 @@ class StudentRemoteDataSource {
         Constant.studentURL,
         data: formData,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return Future.value(1);
       } else {
         return Future.value(0);

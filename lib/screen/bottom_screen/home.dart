@@ -1,10 +1,10 @@
+import 'package:batch_student_objbox_api/repository/batch_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:batch_student_objbox_api/repository/course_repository.dart';
 import 'package:batch_student_objbox_api/screen/batch_student.dart';
 import 'package:batch_student_objbox_api/screen/course_student.dart';
 
 import '../../app/theme.dart';
-import '../../data_source/local_data_source/batch_data_source.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -128,7 +128,7 @@ class DisplayBatches extends StatelessWidget {
       color: Colors.grey[200],
       child: Expanded(
         child: FutureBuilder(
-          future: BatchDataSource().getAllBatch(),
+          future: BatchRepositoryImpl().getAllBatch(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return GridView.count(

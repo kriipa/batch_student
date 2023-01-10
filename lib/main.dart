@@ -7,7 +7,7 @@ import 'helper/objectbox.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  ObjectBoxInstance.deleteDatabase();
+  //ObjectBoxInstance.deleteDatabase();
   ObjectBoxState.objectBoxInstance = await ObjectBoxInstance.init();
   // Load data from json file
   //LoadFromJsonRepositoryImpl().loadFromJson();

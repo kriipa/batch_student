@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:batch_student_objbox_api/app/user_permission.dart';
 import 'package:batch_student_objbox_api/repository/batch_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:batch_student_objbox_api/model/course.dart';
@@ -23,9 +24,20 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  @override
+  void initState() {
+    _checkUserPermission();
+    super.initState();
+  }
+
+  _checkUserPermission() async {
+    await UserPermission.checkCameraPermission();
+  }
+
   Batch? _dropDownValue;
   List<Course> _lstCourseSelected = [];
-
+  List<Batch>? _lstBatch;
+  List<Course>? _lstCourse;
   final _gap = const SizedBox(height: 8);
 
   final _key = GlobalKey<FormState>();
@@ -172,6 +184,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     future: BatchRepositoryImpl().getAllBatch(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        _lstBatch = [];
+                        _lstBatch = snapshot.data as List<Batch>;
                         return DropdownButtonFormField(
                           validator: (value) {
                             if (value == null) {
@@ -183,7 +197,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: const InputDecoration(
                             labelText: 'Select Batch',
                           ),
-                          items: snapshot.data!
+                          items: _lstBatch!
                               .map(
                                 (batch) => DropdownMenuItem(
                                   value: batch,
@@ -218,9 +232,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     future: CourseRepositoryImpl().getAllCourse(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        _lstCourse = [];
+                        _lstCourse = snapshot.data as List<Course>;
                         return MultiSelectDialogField(
                           title: const Text('Select course'),
-                          items: snapshot.data!
+                          items: _lstCourse!
                               .map((course) => MultiSelectItem(
                                     course,
                                     course.courseName,
