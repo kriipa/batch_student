@@ -108,25 +108,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         builder: (context) => Padding(
                           padding: const EdgeInsets.all(20),
                           child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                ElevatedButton.icon(
-                                  onPressed: () {
-                                    _browseImage(ImageSource.camera);
-                                    Navigator.pop(context);
-                                  },
-                                  icon: const Icon(Icons.camera),
-                                  label: const Text('Camera'),
-                                ),
-                                ElevatedButton.icon(
-                                  onPressed: () {
-                                    _browseImage(ImageSource.gallery);
-                                    Navigator.pop(context);
-                                  },
-                                  icon: const Icon(Icons.image),
-                                  label: const Text('Gallery'),
-                                )
-                              ]),
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  _browseImage(ImageSource.camera);
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(Icons.camera),
+                                label: const Text('Camera'),
+                              ),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  _browseImage(ImageSource.gallery);
+                                  Navigator.pop(context);
+                                },
+                                icon: const Icon(Icons.image),
+                                label: const Text('Gallery'),
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },
