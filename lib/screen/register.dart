@@ -184,9 +184,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     future: BatchRepositoryImpl().getAllBatch(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        _lstBatch = [];
-                        _lstBatch = snapshot.data as List<Batch>;
+                        // var seen = <Batch>{};
+                        // var uniqueList = snapshot.data!
+                        //     .where((element) => seen.add(element))
+                        //     .toList();
+                        // _lstBatch = [];
+                        // _lstBatch = snapshot.data as List<Batch>;
                         return DropdownButtonFormField(
+                          value: snapshot.data![0],
                           validator: (value) {
                             if (value == null) {
                               return 'Please select batch';
@@ -197,7 +202,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: const InputDecoration(
                             labelText: 'Select Batch',
                           ),
-                          items: _lstBatch!
+                          items: snapshot.data!
                               .map(
                                 (batch) => DropdownMenuItem(
                                   value: batch,
@@ -232,11 +237,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     future: CourseRepositoryImpl().getAllCourse(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        _lstCourse = [];
-                        _lstCourse = snapshot.data as List<Course>;
+                        // _lstCourse = [];
+                        // _lstCourse = snapshot.data as List<Course>;
                         return MultiSelectDialogField(
+                          //initialValue: [snapshot.data![0]],
                           title: const Text('Select course'),
-                          items: _lstCourse!
+                          items: snapshot.data!
                               .map((course) => MultiSelectItem(
                                     course,
                                     course.courseName,
