@@ -1,9 +1,7 @@
 import 'package:batch_student_objbox_api/model/student.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:objectbox/objectbox.dart';
-part 'batch.g.dart';
 
-//flutter pub run build_runner build  --delete-conflicting-outputs
 @JsonSerializable()
 @Entity()
 class Batch {
@@ -18,13 +16,20 @@ class Batch {
   @Backlink()
   final student = ToMany<Student>();
 
-  //Constructor
-  // Batch(this.batchId, this.batchName, {this.id = 0});
   Batch(this.batchId, this.batchName, {this.id = 0});
 
-  //Convert to JSON
-  factory Batch.fromJson(Map<String, dynamic> json) => _$BatchFromJson(json);
+  factory Batch.fromJson(Map<String, dynamic> json) {
+    return Batch(
+      json['_id'],
+      json['batchName'],
+    );
+  }
 
-  //Convert to Map
-  Map<String, dynamic> toJson() => _$BatchToJson(this);
+  Map<String, dynamic> toJson() => {
+        '_id': batchId,
+        'batchName': batchName,
+      };
 }
+
+
+//flutter pub run build_runner build  --delete-conflicting-outputs

@@ -20,8 +20,6 @@ class Course {
 
   Course(this.courseId, this.courseName, {this.id = 0});
 
-  // Course(this.courseId, this.courseName);
-
   factory Course.fromJson(Map<String, dynamic> json) {
     return Course(json['_id'], json['courseName']);
   }
