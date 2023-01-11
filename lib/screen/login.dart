@@ -1,8 +1,8 @@
+import 'package:batch_student_objbox_api/app/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:batch_student_objbox_api/repository/student_repo.dart';
 import 'package:batch_student_objbox_api/screen/register.dart';
-import 'package:motion_toast/motion_toast.dart';
 
 import 'dashboard.dart';
 
@@ -36,8 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _showMessage() {
-    MotionToast.error(description: const Text('Invalid username or password'))
-        .show(context);
+    showSnackbar(context, 'Invalid username or password', Colors.red);
   }
 
   @override

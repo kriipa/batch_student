@@ -9,8 +9,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //ObjectBoxInstance.deleteDatabase();
   ObjectBoxState.objectBoxInstance = await ObjectBoxInstance.init();
-  // Load data from json file
-  //LoadFromJsonRepositoryImpl().loadFromJson();
   // Disable landscape mode
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

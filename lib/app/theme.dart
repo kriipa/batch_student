@@ -6,16 +6,16 @@ ThemeData getApplicationThemeData() {
     primaryColorLight: HexColor.fromHex("#B3ED9728"),
     primaryColorDark: HexColor.fromHex("#d17d11"),
     disabledColor: HexColor.fromHex("#707070"),
-    // useMaterial3: true,
-    buttonTheme: ButtonThemeData(
-      shape: const StadiumBorder(),
-      disabledColor: HexColor.fromHex("#707070"),
-      buttonColor: HexColor.fromHex("#ED9728"),
-      splashColor: HexColor.fromHex("#B3ED9728"),
-    ),
-    // progressIndicatorTheme: ProgressIndicatorThemeData(
-    //   color: HexColor.fromHex("#ED9728"),
+    useMaterial3: true,
+    // buttonTheme: ButtonThemeData(
+    //   shape: const StadiumBorder(),
+    //   disabledColor: HexColor.fromHex("#707070"),
+    //   buttonColor: HexColor.fromHex("#ED9728"),
+    //   splashColor: HexColor.fromHex("#B3ED9728"),
     // ),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: HexColor.fromHex("#ED9728"),
+    ),
     appBarTheme: AppBarTheme(
       centerTitle: true,
       color: HexColor.fromHex("#ED9728"),
@@ -29,12 +29,12 @@ ThemeData getApplicationThemeData() {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: HexColor.fromHex("#ED9728"),
         textStyle: const TextStyle(
           fontSize: 12,
-          color: Colors.white,
           fontWeight: FontWeight.w500,
         ),
-        backgroundColor: HexColor.fromHex("#ED9728"),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),

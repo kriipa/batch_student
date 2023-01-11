@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:batch_student_objbox_api/app/snackbar.dart';
 import 'package:batch_student_objbox_api/app/user_permission.dart';
 import 'package:batch_student_objbox_api/repository/batch_repo.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'package:batch_student_objbox_api/repository/course_repository.dart';
 import 'package:batch_student_objbox_api/repository/student_repo.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:motion_toast/motion_toast.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 import '../model/batch.dart';
@@ -36,8 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Batch? _dropDownValue;
   List<Course> _lstCourseSelected = [];
-  List<Batch>? _lstBatch;
-  List<Course>? _lstCourse;
+
   final _gap = const SizedBox(height: 8);
 
   final _key = GlobalKey<FormState>();
@@ -83,12 +82,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   _showMessage(int status) {
     if (status > 0) {
-      MotionToast.success(
-        description: const Text('Student added successfully'),
-      ).show(context);
+      showSnackbar(context, 'Successfully added student', Colors.green);
     } else {
-      MotionToast.error(description: const Text('Error in adding student'))
-          .show(context);
+      showSnackbar(context, 'Error registring student', Colors.red);
     }
   }
 
@@ -184,12 +180,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     future: BatchRepositoryImpl().getAllBatch(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        // var seen = <Batch>{};
-                        // var uniqueList = snapshot.data!
-                        //     .where((element) => seen.add(element))
-                        //     .toList();
-                        // _lstBatch = [];
-                        // _lstBatch = snapshot.data as List<Batch>;
+                        _dropDownValue = snapshot.data![0];
                         return DropdownButtonFormField(
                           value: snapshot.data![0],
                           validator: (value) {
@@ -237,8 +228,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     future: CourseRepositoryImpl().getAllCourse(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        // _lstCourse = [];
-                        // _lstCourse = snapshot.data as List<Course>;
                         return MultiSelectDialogField(
                           //initialValue: [snapshot.data![0]],
                           title: const Text('Select course'),
@@ -305,13 +294,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   _gap,
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
+                    child: ElevatedButton.icon(
+                      icon: const Icon(
+                        Icons.save,
+                        color: Colors.white,
+                      ),
                       onPressed: () {
                         if (_key.currentState!.validate()) {
                           _saveStudent();
                         }
                       },
-                      child: const Text('Register'),
+                      label: const Text('Register student'),
                     ),
                   ),
                 ],
