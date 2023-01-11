@@ -9,16 +9,14 @@ class BatchRemoteDataSource {
 
   Future<List<Batch>> getAllBatch() async {
     try {
-      Response response = await _httpServices.get(Constant.batchURL);
+      Response response = await _httpServices.get(
+        Constant.batchURL,
+      );
       if (response.statusCode == 200) {
-        List<Batch> batches = [];
         BatchResponse batchResponse = BatchResponse.fromJson(response.data);
-        for (var item in batchResponse.data!) {
-          batches.add(item);
-        }
-        return Future.value(batches);
+        return batchResponse.data!;
       } else {
-        return Future.value([]);
+        return [];
       }
     } catch (e) {
       throw Exception(e.toString());

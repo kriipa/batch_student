@@ -1,6 +1,6 @@
 class Constant {
   static const String baseURL = "http://10.0.2.2:3000/api/v1/";
-  
+
   // For iOS
   //static const String baseURL = "http://localhost:3000/api/v1/";
 

@@ -2,10 +2,11 @@ import 'package:batch_student_objbox_api/model/student.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:objectbox/objectbox.dart';
 
-@JsonSerializable()
+part 'course.g.dart';
+
 @Entity()
+@JsonSerializable()
 class Course {
-  // @Id(assignable: true)
   @Id(assignable: true)
   int id;
 
@@ -20,12 +21,7 @@ class Course {
 
   Course(this.courseId, this.courseName, {this.id = 0});
 
-  factory Course.fromJson(Map<String, dynamic> json) {
-    return Course(json['_id'], json['courseName']);
-  }
+  factory Course.fromJson(Map<String, dynamic> json) => _$CourseFromJson(json);
 
-  Map<String, dynamic> toJson() => {
-        '_id': courseId,
-        'courseName': courseName,
-      };
+  Map<String, dynamic> toJson() => _$CourseToJson(this);
 }
