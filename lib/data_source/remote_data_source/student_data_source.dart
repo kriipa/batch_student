@@ -4,6 +4,8 @@ import 'package:batch_student_objbox_api/app/constants.dart';
 import 'package:batch_student_objbox_api/data_source/remote_data_source/response/login_response.dart';
 import 'package:batch_student_objbox_api/data_source/remote_data_source/response/student_response.dart';
 import 'package:batch_student_objbox_api/helper/http_service.dart';
+import 'package:batch_student_objbox_api/model/batch.dart';
+import 'package:batch_student_objbox_api/model/course.dart';
 import 'package:batch_student_objbox_api/model/student.dart';
 import 'package:dio/dio.dart';
 import 'package:mime/mime.dart';
@@ -15,31 +17,68 @@ class StudentRemoteDataSource {
   Future<List<Student>?> getStudentsByCourse(String courseId) async {
     try {
       Response response = await _httpServices.get(
-        Constant.studentURL,
+        Constant.searchStudentByCourseURL,
         queryParameters: {
-          'course': courseId,
+          'courseId': courseId,
         },
         options: Options(
-          headers: {"Authorization": "Bearer ${Constant.token}"},
+          headers: {
+            "Authorization": Constant.token,
+          },
         ),
       );
+      List<Student> lstStudents = [];
       if (response.statusCode == 201) {
-        StudentResponse stdResponse = StudentResponse.fromJson(response.data);
-        return stdResponse.data!;
+        // Store response data to a variable
+        var responseData = response.data['data'];
+
+        for (var item in responseData) {
+          var stdId = item['_id'];
+          var fname = item['fname'];
+          var lname = item['lname'];
+
+          // Create a student object
+          Student student = Student(
+            stdId: stdId,
+            fname: fname,
+            lname: lname,
+          );
+
+          // Create a Batch
+          var batchId = item['batch']['_id'];
+          var batchName = item['batch']['batchName'];
+
+          Batch batch = Batch(
+            batchId,
+            batchName,
+          );
+
+          // Assign batch to student
+          student.batch.target = batch;
+
+          for (var course in item['course']) {
+            Course courseObj = Course(course['courseId'], course['courseName']);
+            student.course.add(courseObj);
+          }
+
+          lstStudents.add(student);
+        }
+        return lstStudents;
       } else {
         return [];
       }
     } catch (e) {
       return [];
     }
+    return null;
   }
 
   Future<List<Student>?> getStudentsByBatch(String batchId) async {
     try {
       Response response = await _httpServices.get(
-        Constant.studentURL,
+        Constant.searchStudentByBatchURL,
         queryParameters: {
-          'batch': batchId,
+          'batchId': batchId,
         },
       );
       if (response.statusCode == 201) {

@@ -1,4 +1,4 @@
-import 'package:batch_student_objbox_api/data_source/remote_data_source/student_data_source.dart';
+import 'package:batch_student_objbox_api/repository/student_repo.dart';
 import 'package:flutter/material.dart';
 
 class CourseStudentScreen extends StatefulWidget {
@@ -25,17 +25,17 @@ class _CourseStudentScreenState extends State<CourseStudentScreen> {
         title: Text('Students in $courseId'),
       ),
       body: FutureBuilder(
-        future: StudentRemoteDataSource().getStudentsByCourse(courseId),
+        future: StudentRepositoryImpl().getStudentsByCourse(courseId),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final lstStudents = snapshot.data!;
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
+                // var a = lstStudents[index].batch.target!.batchName.toString();
                 return ListTile(
                   title: Text(lstStudents[index].fname!),
-                  subtitle: Text(
-                      lstStudents[index].batch.target!.batchName.toString()),
+                  subtitle: Text(lstStudents[index].lname!),
                   trailing: Wrap(
                     children: [
                       IconButton(

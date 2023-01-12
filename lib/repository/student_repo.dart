@@ -53,7 +53,7 @@ class StudentRepositoryImpl extends StudentRepository {
   Future<List<Student>?> getStudentsByCourse(String courseId) async {
     bool status = await NetworkConnectivity.isOnline();
     if (status) {
-      return StudentRemoteDataSource().getStudentsByBatch(courseId);
+      return StudentRemoteDataSource().getStudentsByCourse(courseId);
     } else {
       return [];
     }

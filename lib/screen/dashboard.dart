@@ -1,3 +1,4 @@
+import 'package:batch_student_objbox_api/app/constants.dart';
 import 'package:batch_student_objbox_api/app/user_permission.dart';
 import 'package:batch_student_objbox_api/screen/bottom_screen/search_student.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
+    debugPrint(Constant.token);
     checkPermission();
   }
+
+  // void show() {
+  //   showSnackbar(context, 'Token : ${Constant.token}', Colors.yellow);
+  // }
 
   checkPermission() async {
     await UserPermission.checkCameraPermission();
