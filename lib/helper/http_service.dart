@@ -27,8 +27,10 @@ class HttpServices {
         headers: headers,
       ),
     );
-    _dio!.interceptors.add(PrettyDioLogger(
-        requestHeader: true, requestBody: true, responseHeader: true));
+    _dio!.interceptors.add(
+      PrettyDioLogger(
+          requestHeader: true, requestBody: true, responseHeader: true),
+    );
     return _dio!;
   }
 }

@@ -63,7 +63,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   File? _img;
-
   Future _browseImage(ImageSource imageSource) async {
     try {
       // Source is either Gallary or Camera

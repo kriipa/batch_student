@@ -86,13 +86,14 @@ class DisplayCourses extends StatelessWidget {
                         Navigator.pushNamed(
                           context,
                           CourseStudentScreen.route,
-                          arguments: course.courseName,
+                          arguments: course.courseId,
                         );
                       },
                       child: Card(
                         color: HexColor.fromHex("#ED9728"),
                         child: Center(
                           child: Text(
+                            textAlign: TextAlign.center,
                             course.courseName,
                             style: const TextStyle(
                               fontSize: 20,

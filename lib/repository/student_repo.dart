@@ -7,6 +7,8 @@ import 'package:batch_student_objbox_api/model/student.dart';
 
 abstract class StudentRepository {
   Future<List<Student>> getStudents();
+  Future<List<Student>?> getStudentsByCourse(String courseId);
+  Future<List<Student>?> getStudentsByBatch(String batchId);
   Future<int> addStudent(File? file, Student student);
   Future<bool> loginStudent(String username, String password);
 }
@@ -34,6 +36,26 @@ class StudentRepositoryImpl extends StudentRepository {
       return StudentRemoteDataSource().loginStudent(username, password);
     } else {
       return StudentDataSource().loginStudent(username, password);
+    }
+  }
+
+  @override
+  Future<List<Student>?> getStudentsByBatch(String batchId) async {
+    bool status = await NetworkConnectivity.isOnline();
+    if (status) {
+      return StudentRemoteDataSource().getStudentsByBatch(batchId);
+    } else {
+      return [];
+    }
+  }
+
+  @override
+  Future<List<Student>?> getStudentsByCourse(String courseId) async {
+    bool status = await NetworkConnectivity.isOnline();
+    if (status) {
+      return StudentRemoteDataSource().getStudentsByBatch(courseId);
+    } else {
+      return [];
     }
   }
 }

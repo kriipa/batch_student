@@ -1,5 +1,5 @@
+import 'package:batch_student_objbox_api/data_source/remote_data_source/student_data_source.dart';
 import 'package:flutter/material.dart';
-import 'package:batch_student_objbox_api/repository/course_repository.dart';
 
 class CourseStudentScreen extends StatefulWidget {
   const CourseStudentScreen({super.key});
@@ -10,11 +10,11 @@ class CourseStudentScreen extends StatefulWidget {
 }
 
 class _CourseStudentScreenState extends State<CourseStudentScreen> {
-  String courseName = '';
+  String courseId = '';
 
   @override
   void didChangeDependencies() {
-    courseName = ModalRoute.of(context)!.settings.arguments as String;
+    courseId = ModalRoute.of(context)!.settings.arguments as String;
     super.didChangeDependencies();
   }
 
@@ -22,10 +22,10 @@ class _CourseStudentScreenState extends State<CourseStudentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Students in $courseName'),
+        title: Text('Students in $courseId'),
       ),
       body: FutureBuilder(
-        future: CourseRepositoryImpl().getStudentsInEachCourse(courseName),
+        future: StudentRemoteDataSource().getStudentsByCourse(courseId),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final lstStudents = snapshot.data!;

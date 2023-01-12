@@ -56,7 +56,7 @@ dependencies:
   fluttertoast: ^8.0.9
   either_dart: ^0.3.0
   mime: ^1.0.3
-
+  mime_type: ^1.0.0
 
 dev_dependencies:
   flutter_test:

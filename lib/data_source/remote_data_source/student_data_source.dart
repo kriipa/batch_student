@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:batch_student_objbox_api/app/constants.dart';
 import 'package:batch_student_objbox_api/data_source/remote_data_source/response/login_response.dart';
+import 'package:batch_student_objbox_api/data_source/remote_data_source/response/student_response.dart';
 import 'package:batch_student_objbox_api/helper/http_service.dart';
 import 'package:batch_student_objbox_api/model/student.dart';
 import 'package:dio/dio.dart';
@@ -11,24 +12,44 @@ import 'package:http_parser/http_parser.dart';
 class StudentRemoteDataSource {
   final Dio _httpServices = HttpServices().getDioInstance();
 
-  Future<bool> loginStudent(String username, String password) async {
+  Future<List<Student>?> getStudentsByCourse(String courseId) async {
     try {
-      Response response = await _httpServices.post(
-        Constant.studentLoginURL,
-        data: {
-          'username': username,
-          'password': password,
+      Response response = await _httpServices.get(
+        Constant.studentURL,
+        queryParameters: {
+          'course': courseId,
         },
+        options: Options(
+          headers: {"Authorization": "Bearer ${Constant.token}"},
+        ),
       );
-      if (response.statusCode == 200) {
-        LoginResponse loginResponse = LoginResponse.fromJson(response.data);
-        Constant.token = loginResponse.token!;
-        return Future.value(true);
+      if (response.statusCode == 201) {
+        StudentResponse stdResponse = StudentResponse.fromJson(response.data);
+        return stdResponse.data!;
       } else {
-        return Future.value(false);
+        return [];
       }
     } catch (e) {
-      return Future.value(false);
+      return [];
+    }
+  }
+
+  Future<List<Student>?> getStudentsByBatch(String batchId) async {
+    try {
+      Response response = await _httpServices.get(
+        Constant.studentURL,
+        queryParameters: {
+          'batch': batchId,
+        },
+      );
+      if (response.statusCode == 201) {
+        StudentResponse stdResponse = StudentResponse.fromJson(response.data);
+        return stdResponse.data!;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
     }
   }
 
@@ -53,17 +74,39 @@ class StudentRemoteDataSource {
         'course': student.course.map((course) => course.courseId).toList(),
         'image': image,
       });
+
       Response response = await _httpServices.post(
         Constant.studentURL,
         data: formData,
       );
       if (response.statusCode == 201) {
-        return Future.value(1);
+        return 1;
       } else {
-        return Future.value(0);
+        return 0;
       }
     } catch (e) {
-      return Future.value(0);
+      return 0;
+    }
+  }
+
+  Future<bool> loginStudent(String username, String password) async {
+    try {
+      Response response = await _httpServices.post(
+        Constant.studentLoginURL,
+        data: {
+          'username': username,
+          'password': password,
+        },
+      );
+      if (response.statusCode == 200) {
+        LoginResponse loginResponse = LoginResponse.fromJson(response.data);
+        Constant.token = "Bearer ${loginResponse.token!}";
+        return Future.value(true);
+      } else {
+        return Future.value(false);
+      }
+    } catch (e) {
+      return Future.value(false);
     }
   }
 }

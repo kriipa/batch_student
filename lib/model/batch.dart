@@ -2,6 +2,8 @@ import 'package:batch_student_objbox_api/model/student.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:objectbox/objectbox.dart';
 
+//flutter pub run build_runner build  --delete-conflicting-outputs
+
 @JsonSerializable()
 @Entity()
 class Batch {
@@ -30,6 +32,3 @@ class Batch {
         'batchName': batchName,
       };
 }
-
-
-//flutter pub run build_runner build  --delete-conflicting-outputs
