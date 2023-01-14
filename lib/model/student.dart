@@ -20,6 +20,10 @@ class Student {
   String? image;
   String? username;
   String? password;
+  @JsonKey(name: 'batch')
+  Batch? batches;
+  @JsonKey(name: 'course')
+  List<Course>? courses;
 
   final batch = ToOne<Batch>();
   final course = ToMany<Course>();
@@ -31,6 +35,8 @@ class Student {
     this.image,
     this.username,
     this.password,
+    this.batches,
+    this.courses,
     this.stdId = 0,
   });
 

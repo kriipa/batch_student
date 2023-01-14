@@ -288,7 +288,6 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = Student(
-              stdId: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
               studentId: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 6),
               fname: const fb.StringReader(asciiOptimization: true)
@@ -300,7 +299,9 @@ ModelDefinition getObjectBoxModel() {
               username: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 14),
               password: const fb.StringReader(asciiOptimization: true)
-                  .vTableGetNullable(buffer, rootOffset, 16));
+                  .vTableGetNullable(buffer, rootOffset, 16),
+              stdId:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0));
           object.batch.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
           object.batch.attach(store);
