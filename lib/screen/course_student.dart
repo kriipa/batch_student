@@ -54,29 +54,29 @@ class DisplayStudentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.3,
-      child: Stack(
-        children: [
-          Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            elevation: 4,
-            margin: const EdgeInsets.all(10),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Image.network(
-                Constant.userImageURL + student.image!,
-              ),
+    return Stack(
+      children: [
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          elevation: 4,
+          margin: const EdgeInsets.all(10),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.network(
+              Constant.userImageURL + student.image!,
             ),
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Container(
-              color: Colors.black54,
+              color: Colors.grey.withOpacity(0.5),
               child: ListTile(
                 title: Text(
                   '${student.fname} ${student.lname}',
@@ -95,8 +95,11 @@ class DisplayStudentWidget extends StatelessWidget {
               ),
             ),
           ),
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+      ],
     );
   }
 }

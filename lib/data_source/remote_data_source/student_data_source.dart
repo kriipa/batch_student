@@ -30,46 +30,11 @@ class StudentRemoteDataSource {
         StudentResponse stdResponse = StudentResponse.fromJson(response.data);
         lstStudents = stdResponse.data!;
         return lstStudents;
-        // // Store response data to a variable
-        // var responseData = response.data['data'];
-
-        // for (var item in responseData) {
-        //   var stdId = item['_id'];
-        //   var fname = item['fname'];
-        //   var lname = item['lname'];
-
-        //   // Create a student object
-        //   Student student = Student(
-        //     stdId: stdId,
-        //     fname: fname,
-        //     lname: lname,
-        //   );
-
-        //   // Create a Batch
-        //   var batchId = item['batch']['_id'];
-        //   var batchName = item['batch']['batchName'];
-
-        //   Batch batch = Batch(
-        //     batchId,
-        //     batchName,
-        //   );
-
-        //   // Assign batch to student
-        //   student.batch.target = batch;
-
-        //   for (var course in item['course']) {
-        //     Course courseObj = Course(course['courseId'], course['courseName']);
-        //     student.course.add(courseObj);
-        //   }
-
-        //   lstStudents.add(student);
-        // }
-        // return lstStudents;
       } else {
         return [];
       }
     } catch (e) {
-      return [];
+      throw Exception(e.toString());
     }
   }
 
@@ -140,12 +105,12 @@ class StudentRemoteDataSource {
       if (response.statusCode == 200) {
         LoginResponse loginResponse = LoginResponse.fromJson(response.data);
         Constant.token = "Bearer ${loginResponse.token!}";
-        return Future.value(true);
+        return true;
       } else {
-        return Future.value(false);
+        return false;
       }
     } catch (e) {
-      return Future.value(false);
+      return false;
     }
   }
 }

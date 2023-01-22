@@ -20,6 +20,7 @@ class Student {
   String? image;
   String? username;
   String? password;
+
   @JsonKey(name: 'batch')
   Batch? batches;
   @JsonKey(name: 'course')

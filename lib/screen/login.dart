@@ -24,7 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
     final islogin = await StudentRepositoryImpl()
         .loginStudent(_usernameController.text, _passwordController.text);
     if (islogin) {
-      // write here
       _goToAnotherPage();
     } else {
       _showMessage();
