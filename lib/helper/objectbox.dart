@@ -42,6 +42,7 @@ class ObjectBoxInstance {
   int addBatch(Batch batch) {
     return _batch.put(batch);
   }
+  // comment ussab
 
   List<Batch> getAllBatch() {
     return _batch.getAll();
