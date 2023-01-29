@@ -120,6 +120,30 @@ class ObjectBoxInstance {
     return _course.put(course);
   }
 
+  addAllCourse(List<Course> lstCourse){
+    for (var item in lstCourse) {
+      if (_course
+          .query(Course_.courseId.equals(item.courseId))
+          .build()
+          .findFirst() ==
+          null) {
+        _course.put(item);
+      }
+    }
+  }
+
+  addAllBatch(List<Batch> lstBatch){
+    for (var item in lstBatch){
+      if (_batch
+          .query(Batch_.batchId.equals(item.batchId!))
+          .build()
+          .findFirst() ==
+          null) {
+        _batch.put(item);
+      }
+    }
+  }
+
   List<Course> getAllCourse() {
     return _course.getAll();
   }

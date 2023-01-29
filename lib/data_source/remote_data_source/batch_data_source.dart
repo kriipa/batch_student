@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 class BatchRemoteDataSource {
   final Dio _httpServices = HttpServices().getDioInstance();
 
-  Future<List<Batch>> getAllBatch() async {
+  Future <List<Batch>> getAllBatch() async {
     try {
       Response response = await _httpServices.get(
         Constant.batchURL,
