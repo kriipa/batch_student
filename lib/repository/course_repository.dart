@@ -21,8 +21,12 @@ class CourseRepositoryImpl extends CourseRepository {
   @override
   Future<List<Course>> getAllCourse() async {
     bool status = await NetworkConnectivity.isOnline();
+    List<Course> lstCourse = [];
     if (status) {
-      return CourseRemoteDataSource().getAllCourse();
+      lstCourse = await CourseRemoteDataSource().getAllCourse();
+      await CourseDataSource().addAllCourse(lstCourse);
+      return lstCourse;
+      // return CourseRemoteDataSource().getAllCourse();
     } else {
       return CourseDataSource().getAllCourse();
     }

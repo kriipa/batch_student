@@ -20,8 +20,14 @@ class BatchRepositoryImpl extends BatchRepository {
   @override
   Future<List<Batch>> getAllBatch() async {
     bool status = await NetworkConnectivity.isOnline();
+    List<Batch> lstBatch = [];
     if (status) {
-      return BatchRemoteDataSource().getAllBatch();
+      lstBatch = await BatchRemoteDataSource().getAllBatch();
+      await BatchDataSource().addAllBatch(lstBatch);
+
+      // add all batch to objectbox
+      return lstBatch;
+      // return BatchRemoteDataSource().getAllBatch();
     } else {
       return BatchDataSource().getAllBatch();
     }
